@@ -1,0 +1,40 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.ec_re.mapper.ItemListMapper">
+	<resultMap id="ItemMapper_Base" type="com.example.ec_re.domain.Item">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="description" column="description" />
+		<result property="priceM" column="price_m" />
+		<result property="priceL" column="price_l" />
+		<result property="imagePath" column="image_path" />
+		<result property="deleted" column="deleted" />
+	</resultMap>
+	<select id="findAll" resultMap="ItemMapper_Base">
+		SELECT
+			id,
+			name,
+			description,
+			price_m,
+			price_l,
+			image_path,
+			deleted
+		FROM
+			items;</select>
+
+	<select id="findByName" parameterType="java.lang.String" resultMap="ItemMapper_Base">
+		SELECT
+			id,
+			name,
+			description,
+			price_m,
+			price_l,
+			image_path,
+			deleted
+		FROM
+			items
+		<where>
+			<if test="itemName != null">
+			  AND name LIKE CONCAT('%', #{itemName}, '%');</if>
+		</where>
+	</select>
+</mapper>
