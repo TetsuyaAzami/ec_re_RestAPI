@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.ec_re.mapper.OrderRegisterMapper">
+	<insert id="saveNewShoppingCart" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO orders (user_id, status, total_price)
+		VALUES(#{userId}, #{status, typeHandler=com.example.ec_re.typehandler.OrderStatusTypeHandler}, #{totalPrice});</insert>
+
+	<update id="finishingOrder" useGeneratedKeys="true" keyProperty="id" parameterType="com.example.ec_re.domain.Order">
+	UPDATE
+		orders
+	SET
+		status = #{status, typeHandler=com.example.ec_re.typehandler.OrderStatusTypeHandler},
+		order_date = #{orderDate},
+		destination_name = #{destinationName},
+		destination_email = #{destinationEmail},
+		destination_zipcode = #{destinationZipcode},
+		destination_address = #{destinationAddress},
+		destination_tel = #{destinationTel},
+		delivery_time = #{deliveryTime},
+		payment_method = #{paymentMethod}
+	WHERE user_id = #{userId} AND status = 0;</update>
+</mapper>

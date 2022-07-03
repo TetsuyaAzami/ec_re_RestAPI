@@ -1,0 +1,123 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.ec_re.mapper.OrderQueryMapper">
+	<resultMap id="OrderResultMap_Base" type="com.example.ec_re.domain.Order">
+		<id property="id" column="o_id"></id>
+		<result property="userId" column="o_user_id" />
+		<result property="status" column="o_status" jdbcType="INTEGER" typeHandler="com.example.ec_re.typehandler.OrderStatusTypeHandler" />
+		<result property="totalPrice" column="o_total_price" />
+		<result property="orderDate" column="o_order_date" />
+		<result property="destinationName" column="o_destination_name" />
+		<result property="destinationEmail" column="o_destination_email" />
+		<result property="destinationZipcode" column="o_destination_zipcode" />
+		<result property="destinationAddress" column="o_destination_address" />
+		<result property="destinationTel" column="o_destination_tel" />
+		<result property="deliveryTime" column="o_delivery_time" />
+		<result property="paymentMethod" column="o_payment_method" />
+		<association property="user" resultMap="UserResultMap_Base"></association>
+		<collection property="orderItemList" resultMap="OrderItemResultMap_Base"></collection>
+	</resultMap>
+
+	<resultMap id="UserResultMap_Base" type="com.example.ec_re.domain.User">
+		<id property="id" column="u_id" />
+		<result property="name" column="u_name" />
+		<result property="email" column="u_email" />
+		<result property="password" column="u_password" />
+		<result property="zipcode" column="u_zipcode" />
+		<result property="address" column="u_address" />
+		<result property="telephone" column="u_telephone" />
+		<result property="role" column="u_role" />
+	</resultMap>
+
+	<resultMap id="OrderItemResultMap_Base" type="com.example.ec_re.domain.OrderItem">
+		<id property="id" column="oi_id" />
+		<result property="itemId" column="oi_item_id" />
+		<result property="orderId" column="oi_order_id" />
+		<result property="quantity" column="oi_quantity" />
+		<result property="size" column="oi_size" />
+		<association property="item" resultMap="ItemResultMap_Base"></association>
+		<collection property="orderToppingList" resultMap="OrderToppingResultMap_Base"></collection>
+	</resultMap>
+
+	<resultMap id="ItemResultMap_Base" type="com.example.ec_re.domain.Item">
+		<id property="id" column="i_id" />
+		<result property="name" column="i_name" />
+		<result property="description" column="i_description" />
+		<result property="priceM" column="i_price_m" />
+		<result property="priceL" column="i_price_l" />
+		<result property="imagePath" column="i_image_path" />
+		<result property="deleted" column="i_deleted" />
+	</resultMap>
+
+	<resultMap id="OrderToppingResultMap_Base" type="com.example.ec_re.domain.OrderTopping">
+		<id property="id" column="ot_id" />
+		<result property="toppingId" column="ot_topping_id" />
+		<result property="orderItemId" column="ot_order_item_id" />
+		<association property="topping" resultMap="ToppingResultMap_Base"></association>
+	</resultMap>
+
+	<resultMap id="ToppingResultMap_Base" type="com.example.ec_re.domain.Topping">
+		<id property="id" column="t_id" />
+		<result property="name" column="t_name" />
+		<result property="priceM" column="t_price_m" />
+		<result property="priceL" column="t_price_l" />
+	</resultMap>
+
+	<select id="findShoppingCartByUserId" resultMap="OrderResultMap_Base">
+		SELECT
+			o.id o_id,
+			o.user_id o_user_id,
+			o.status o_status,
+			o.total_price o_total_price,
+			o.order_date o_order_date,
+			o.destination_name o_destination_name,
+			o.destination_email o_destination_email,
+			o.destination_zipcode o_destination_zipcode,
+			o.destination_address o_destination_address,
+			o.destination_tel o_destination_tel,
+			o.delivery_time o_delivery_time,
+			o.payment_method o_payment_method,
+			u.id u_id,
+			u.name u_name,
+			u.email u_email,
+			u.password u_password,
+			u.zipcode u_zipcode,
+			u.address u_address,
+			u.telephone u_telephone,
+			u.role u_role,
+			oi.id oi_id,
+			oi.item_id oi_item_id,
+			oi.order_id oi_order_id,
+			oi.quantity oi_quantity,
+			oi.size oi_size,
+			i.id i_id,
+			i.name i_name,
+			i.description i_description,
+			i.price_m i_price_m,
+			i.price_l i_price_l,
+			i.image_path i_image_path,
+			i.deleted i_deleted,
+			ot.id ot_id,
+			ot.topping_id ot_topping_id,
+			ot.order_item_id ot_order_item_id,
+			t.id t_id,
+			t.name t_name,
+			t.price_m t_price_m,
+			t.price_l t_price_l
+		FROM
+			orders o
+			INNER JOIN users u
+			ON o.user_id = u.id
+			LEFT OUTER JOIN order_items oi
+			ON o.id = oi.order_id
+			LEFT OUTER JOIN items i
+			ON oi.item_id = i.id
+			LEFT OUTER JOIN order_toppings ot
+			ON oi.id = ot.order_item_id
+			LEFT OUTER JOIN toppings t
+			ON ot.topping_id = t.id
+		WHERE
+			u.id = #{userId}
+			AND status = #{orderStatus, typeHandler=com.example.ec_re.typehandler.OrderStatusTypeHandler}
+		ORDER BY o.order_date DESC
+		LIMIT 1;</select>
+</mapper>

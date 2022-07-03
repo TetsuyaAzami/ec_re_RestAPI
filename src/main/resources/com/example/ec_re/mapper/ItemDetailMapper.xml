@@ -1,0 +1,25 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.ec_re.mapper.ItemDetailMapper">
+	<resultMap id="ItemMapper_Base" type="com.example.ec_re.domain.Item">
+		<id property="id" column="i_id" />
+		<result property="name" column="i_name" />
+		<result property="description" column="i_description" />
+		<result property="priceM" column="i_price_m" />
+		<result property="priceL" column="i_price_l" />
+		<result property="imagePath" column="i_image_path" />
+		<result property="deleted" column="i_deleted" />
+	</resultMap>
+	<select id="detail" parameterType="Integer" resultMap="ItemMapper_Base">
+		SELECT
+			i.id i_id,
+			i.name i_name,
+			i.description i_description,
+			i.price_m i_price_m,
+			i.price_l i_price_l,
+			i.image_path i_image_path,
+			i.deleted i_deleted
+		FROM
+			items i
+		WHERE i.id = #{itemId};
+</select>
+</mapper>
