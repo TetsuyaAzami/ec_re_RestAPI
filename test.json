@@ -1,0 +1,10 @@
+{
+	"destinationName": "ユーザ1",
+	"destinationEmail": "user1@example.com",
+	"destinationZipcode": "111-1111",
+	"destinationAddress": "住所1",
+	"destinationTel": "111-1111-1111",
+	"deliveryDate": "1111-11-11",
+	"deliveryTime": 8,
+	"paymentMethod": 0
+}

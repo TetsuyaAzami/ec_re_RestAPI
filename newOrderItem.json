@@ -1,0 +1,36 @@
+{
+	"itemId": 1,
+	"quantity": 3,
+	"size": "M",
+	"item": {
+		"id": 1,
+		"name": "とんこつラーメン",
+		"description": "創業当時から今に引き継ぐとんこつラーメンの本流であり、原点の味。18時間の調理と、丸1日の熟成を経て、とんこつの旨味を極限まで抽出した豊かで香り高いシルキーなスープに、博多らしい細麺がマッチします。",
+		"priceM": 700,
+		"priceL": 800,
+		"imagePath": "1.jpg",
+		"deleted": false
+	},
+	"orderToppingList": [
+		{
+			"toppingId": 17,
+			"orderItemId": null,
+			"topping": {
+				"id": 17,
+				"name": "太麺に変更",
+				"priceL": 300,
+				"priceM": 200
+			}
+		},
+		{
+			"toppingId": 18,
+			"orderItemId": null,
+			"topping": {
+				"id": 18,
+				"name": "追い飯",
+				"priceL": 300,
+				"priceM": 200
+			}
+		}
+	]
+}

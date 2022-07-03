@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.ec_re.mapper.ToppingDetailMapper">
+	<resultMap id="ToppingMapper_Base" type="com.example.ec_re.domain.Topping">
+		<id property="id" column="t_id" />
+		<result property="name" column="t_name" />
+		<result property="priceM" column="t_price_m" />
+		<result property="priceL" column="t_price_l" />
+	</resultMap>
+	<select id="findAll" resultMap="ToppingMapper_Base">
+		SELECT
+			t.id t_id,
+			t.name t_name,
+			t.price_m t_price_m,
+			t.price_l t_price_l
+		FROM
+			toppings t;
+</select>
+</mapper>
