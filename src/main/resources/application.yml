@@ -9,3 +9,5 @@ spring:
   sql:
     init:
       mode: always
+mybatis:
+  type-handlers-package: com.example.ec_re.typehandler

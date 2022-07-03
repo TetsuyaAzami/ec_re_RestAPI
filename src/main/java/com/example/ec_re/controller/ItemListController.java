@@ -7,6 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.example.ec_re.common.Page;
 import com.example.ec_re.domain.Item;
 import com.example.ec_re.mapper.ItemListMapper;
 
@@ -18,15 +19,17 @@ public class ItemListController {
 
 	@RequestMapping("")
 	public List<Item> index(String offset, String limit) {
-		var offsetInt = Integer.parseInt(offset);
-		var limitInt = Integer.parseInt(limit);
+		var offsetInt = Page.offset(offset);
+		var limitInt = Page.limit(limit);
 		var items = itemListMapper.findAll(new RowBounds(offsetInt, limitInt));
 		return items;
 	}
 
 	@RequestMapping("/search")
-	public Map<String, List<Item>> search() {
-		var items = itemListMapper.findByName("麺", new RowBounds(0, 10));
+	public Map<String, List<Item>> search(String itemName, String offset, String limit) {
+		var offsetInt = Page.offset(offset);
+		var limitInt = Page.limit(limit);
+		var items = itemListMapper.findByName(itemName, new RowBounds(offsetInt, limitInt));
 		return Collections.singletonMap("items", items);
 	}
 }

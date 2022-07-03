@@ -1,5 +1,6 @@
 package com.example.ec_re.domain;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,4 +16,5 @@ public class Item {
 	private Integer priceL;
 	private String imagePath;
 	private Boolean deleted;
+	private List<Topping> toppingList;
 }
